@@ -16,10 +16,10 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 class API_Server:
 
     def __init__(self, database, port):
-       print('entered API_Server init with port: ?', [port])
+       print 'entered API_Server init with port: ', port
        self.db = database
 
-       server = ThreadedTCPServer(("localhost", port), ThreadedTCPRequestHandler)
+       server = ThreadedTCPServer(("", port), ThreadedTCPRequestHandler)
        server_thread = threading.Thread(target=server.serve_forever)
        server_thread.daemon = True
        server_thread.start()

@@ -9,3 +9,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+    try:
+        input()
+    except SyntaxError:
+        print 'Exiting.'
+        pass

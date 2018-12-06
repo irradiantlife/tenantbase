@@ -1,13 +1,31 @@
 import socket
 import threading
 import SocketServer
+from database import Database
 
 class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
+    def __init__(self, *args, **keys):
+        self.db = Database()
+        SocketServer.BaseRequestHandler.__init__(self, *args, **keys)
 
     def handle(self):
         data = self.request.recv(1024)
-        cur_thread = threading.current_thread()
-        response = "{}: {}".format(cur_thread.name, data)
+
+        print data
+        sd = data.split()
+        verb = sd[0]
+        key = sd[1]
+        response = ""
+
+        if verb == 'GET':
+           response = self.db.read(key) or ""
+
+        if verb == 'SET':
+            self.db.put_value(key, sd[2])
+
+        if verb == ' DELETE':
+            self.db.delete(key)
+
         self.request.sendall(response)
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
@@ -15,11 +33,11 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
 class API_Server:
 
-    def __init__(self, database, port):
+    def __init__(self, port):
        print 'entered API_Server init with port: ', port
-       self.db = database
 
-       server = ThreadedTCPServer(("", port), ThreadedTCPRequestHandler)
+       Handler = ThreadedTCPRequestHandler
+       server = ThreadedTCPServer(("", port), Handler)
        server_thread = threading.Thread(target=server.serve_forever)
        server_thread.daemon = True
        server_thread.start()

@@ -13,6 +13,10 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
 
         print data
         sd = data.split()
+        if len(sd) < 2:
+            self.request.sendall("")
+            return
+
         verb = sd[0]
         key = sd[1]
         response = ""

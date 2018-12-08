@@ -8,6 +8,7 @@ usage:
 python main.py database.sqlite
 
 port 11211 will serve a key-value store API
+
 port 8000 will serve a status page
 
 tests:

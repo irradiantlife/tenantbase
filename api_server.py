@@ -9,13 +9,11 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         SocketServer.BaseRequestHandler.__init__(self, *args, **keys)
 
     def handle(self):
-        #TODO: NEWLINE handling in socket
         data = self.request.recv(1024)
 
-        print data
-        sd = data.split()
+        sd = data.splitlines()[0].split()
         if len(sd) < 2:
-            self.request.sendall("")
+            self.request.sendall("ERROR")
             return
 
         verb = sd[0]
@@ -26,7 +24,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
             response = "VALUE " + (self.db.read(key) or "")
 
         if verb == 'SET':
-            value = sd[2] # would rather use content after newline
+            value = data.splitlines()[1]
             self.db.put_value(key, value)
             response = "STORED"
 

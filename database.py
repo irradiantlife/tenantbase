@@ -37,6 +37,7 @@ class Database:
     def delete(self, key):
         print 'deleting ', key
         self.db.execute('delete from storage where key = ?', [key])
+        self.db.commit()
 
     def read_all(self):
         #what kind of struct is this even

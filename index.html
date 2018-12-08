@@ -6,7 +6,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
-  </head>
+
+    <link rel="stylesheet" type="text/css" href="main.css" />
+ </head>
   <body>
     <div id="banner"><h2>Hello, Tenantbase!</h2></div>
 
@@ -24,13 +26,19 @@
       render() {
         return (
           <li>
-            <span>Key: {this.props.item.key}</span>
+            <div><span className='green-highlight'>Key:</span>
+            <span> {this.props.item.key} </span>
+
             <input
               type="button"
               value= {this.state.show ? " hide value " : " show value " }
               onClick={this.onToggleView}
             />
-            { this.state.show ? <span>{this.props.item.value}</span> : null }
+             </div>
+
+            { this.state.show ? <div><span className='green-highlight'>Value:</span>
+            <span> {this.props.item.value} </span></div> : null }
+
           </li>
         );
       }
@@ -73,12 +81,12 @@
             </div>
           );
         } else {
-          return <div>No items found</div>
+          return <div className="message">No items found</div>
         }
       }
 
       renderLoading () {
-        return <div>Loading...</div>
+        return <div className="message">Loading...</div>
       }
     }
 

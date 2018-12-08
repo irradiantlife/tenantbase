@@ -1,0 +1,32 @@
+body {
+  margin: 0 0 25px 25px;
+  font-family: Abrade,Avenir,Helvetica Neue,Helvetica,Arial,sans-serif;
+  ont-size: 15px;
+  line-height: 1.42857;
+}
+
+.green-highlight, .message {
+  color: #64c192;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin-bottom: 30px;
+  height: 60px;
+}
+
+input {
+  margin-left: 30px;
+  border: 1px outset black;
+  background-color: #55b780;
+  cursor:pointer;
+}
+
+input:hover {
+  background-color: #558cb7;
+  color:white;
+}
